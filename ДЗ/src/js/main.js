@@ -28,7 +28,18 @@ let startBtn = document.getElementById('start'),
 
 let money, time;
 
+expensesBtn.disabled = true;
+optionalExpensesBtn.disabled = true;
+countBtn.disabled = true;
 
+function checkInputsData (incomingArr){
+    for (let i = 0; i < incomingArr.length; i++){
+        if (incomingArr[i].value == ''){
+            return true;
+        }
+    }
+    return false;
+}
 
 startBtn.addEventListener('click', function() {
 
@@ -45,10 +56,16 @@ startBtn.addEventListener('click', function() {
     monthValue.value = new Date(Date.parse(time)).getMonth() + 1;
     dayValue.value = new Date(Date.parse(time)).getDate();
 
+    expensesBtn.disabled = false;
+    optionalExpensesBtn.disabled = false;
+    countBtn.disabled = false;
 });
 
+
+
 expensesBtn.addEventListener('click', function() {
-    let sum = 0;
+    if (checkInputsData(expensesItem) === false) {
+        let sum = 0;
 
         for(let i = 0; i < expensesItem.length; i++){
             let a = expensesItem[i].value,
@@ -63,20 +80,34 @@ expensesBtn.addEventListener('click', function() {
             }
         }
         expensesValue.textContent = sum;
+
+        if(typeof(a) == null && typeof(b) == null){
+            expensesBtn.disabled = true;
+        }
+    } else {
+        expensesValue.textContent = 'Недостаточно данных';
+    }
+    
 });
 
 optionalExpensesBtn.addEventListener('click', function(){
-    for (let i = 0; i < optionalExpensesItem.length; i++){
-        let opt = optionalExpensesItem[i].value;
-        appData.optionExpenses[i] = opt;
-        optionalExpensesValue.textContent += appData.optionExpenses[i] + ' ';
+    if (checkInputsData(optionalExpensesItem) === false){
+        for (let i = 0; i < optionalExpensesItem.length; i++){
+            let opt = optionalExpensesItem[i].value;
+            appData.optionExpenses[i] = opt;
+            optionalExpensesValue.textContent += appData.optionExpenses[i] + ' ';
+        }
+    } else {
+        optionalExpensesValue.textContent = '';
     }
+    
 });
 
 countBtn.addEventListener('click', function() {
 
     if (appData.budget != undefined) {
-        appData.moneyPerDay = (appData.budget / 30).toFixed();
+        appData.moneyPerDay = ((appData.budget - expensesValue.textContent) / 30).toFixed();
+        // appData.moneyPerDay = (appData.budget / 30).toFixed();
         dayBudgetValue.textContent = appData.moneyPerDay;
 
     if (appData.moneyPerDay < 100) {
@@ -149,7 +180,7 @@ let appData = {
 
 
 
-
+// appData.moneyPerDay = (appData.budget / 30).toFixed();
 
 
 
