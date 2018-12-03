@@ -70,7 +70,7 @@ expensesBtn.addEventListener('click', function() {
         for(let i = 0; i < expensesItem.length; i++){
             let a = expensesItem[i].value,
                 b = expensesItem[++i].value;
-
+                
             if((typeof(a)) != null && (typeof(b)) != null && a != '' && b != '' && a.length < 5){
                 console.log('Всё верно');
                 appData.expenses[a] = b;
@@ -87,7 +87,6 @@ expensesBtn.addEventListener('click', function() {
     } else {
         expensesValue.textContent = 'Недостаточно данных';
     }
-    
 });
 
 optionalExpensesBtn.addEventListener('click', function(){
@@ -100,11 +99,10 @@ optionalExpensesBtn.addEventListener('click', function(){
     } else {
         optionalExpensesValue.textContent = '';
     }
-    
 });
 
 countBtn.addEventListener('click', function() {
-
+    
     if (appData.budget != undefined) {
         appData.moneyPerDay = ((appData.budget - expensesValue.textContent) / 30).toFixed();
         // appData.moneyPerDay = (appData.budget / 30).toFixed();
@@ -180,7 +178,7 @@ let appData = {
 
 
 
-// appData.moneyPerDay = (appData.budget / 30).toFixed();
+
 
 
 
