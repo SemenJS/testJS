@@ -141,11 +141,13 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    function sendForm(elem){
+
     
 
-    form.addEventListener('submit', function (event) {
+    elem.addEventListener('submit', function (event) {
         event.preventDefault();
-        input.appendChild(statusMessege);
+        elem.appendChild(statusMessage);
         let formData = new FormData(form);
   
         function postData(data) {
@@ -156,13 +158,13 @@ window.addEventListener('DOMContentLoaded', () => {
   
             request.onreadystatechange = function () {
               if (request.readyState < 4) {
-
+                //
                 resolve();
               } else if (request.readyState === 4 && request.status == 200) {
-
+                // 
                 resolve();
               } else {
-
+                // 
                 reject();
               }
             };
@@ -178,10 +180,13 @@ window.addEventListener('DOMContentLoaded', () => {
   
   
         postData(formData)
-          .then(() => statusMessege.innerHTML = message.loadding)
-          .then(() => statusMessege.innerHTML = message.soccess)
-          .catch(() => statusMessege.innerHTML = message.failure)
+          .then(() => statusMessage.innerHTML = message.loadding)
+          .then(() => statusMessage.innerHTML = message.success)
+          .catch(() => statusMessage.innerHTML = message.failure)
           .then(clearInput);
       });
-
+    }
+    sendForm(form);
+    sendForm(formTwo);
 });
+
